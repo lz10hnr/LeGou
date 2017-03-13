@@ -3,7 +3,7 @@ package cn.usian.legou.model.http.callback;
 /**
  * Created by TuLing on 2017/3/10.
  */
-public interface ResultCallBack<T extends Object> {
+public interface ResultCallBack<T> {
 
     /**
      * 请求成功的回调
