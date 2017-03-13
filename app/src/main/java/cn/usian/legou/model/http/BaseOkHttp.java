@@ -98,7 +98,7 @@ public class BaseOkHttp<T> {
      * @param params 参数列表
      * @param callBack 回调
      */
-    public void post(String url, Map<String,String> params, final ResultCallBack<String> callBack){
+    public void post(String url, Map<String,String> params, final ResultCallBack<T> callBack){
         this.callBack = callBack;
         FormBody.Builder builder = null;
         if(params != null && params.size() > 0) {
