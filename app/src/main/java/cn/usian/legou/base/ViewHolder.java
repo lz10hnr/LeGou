@@ -32,8 +32,6 @@ public class ViewHolder {
         this.context = context;
         convertView = LayoutInflater.from(context).inflate(layoutId,null);
         convertView.setTag(this);
-        this.convertView = convertView;
-
     }
     //第二步 提供一个静态的公共的方法 该方法的返回值就是ViewHolder对象
     public static ViewHolder getInstance(Context context,View convertView, int layoutId){
