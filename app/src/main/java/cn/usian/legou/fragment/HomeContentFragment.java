@@ -1,5 +1,6 @@
 package cn.usian.legou.fragment;
 
+import android.util.Log;
 import android.view.View;
 import android.widget.ListView;
 
@@ -7,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.usian.legou.R;
+import cn.usian.legou.adapter.HomeContentAdapter;
 import cn.usian.legou.base.BaseFragment;
-import cn.usian.legou.base.CommonAdapter;
-import cn.usian.legou.base.ViewHolder;
 import cn.usian.legou.common.Keys;
 import cn.usian.legou.common.Urls;
 import cn.usian.legou.model.entity.Goods;
@@ -26,7 +26,7 @@ public class HomeContentFragment extends BaseFragment {
     private IHomeModel homeModel;
     private int currentPage = 1;
     private List<Goods.DataBean> datas;
-    private CommonAdapter<Goods.DataBean> adapter;
+    private HomeContentAdapter adapter;
 
     @Override
     protected int getLayoutId() {
@@ -40,24 +40,17 @@ public class HomeContentFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
         datas = new ArrayList<>();
         homeModel = new HomeModelImpl();
         params.put(Keys.PAGE,currentPage+"");
         params.put(Keys.ID,"1");
-        adapter = new CommonAdapter<Goods.DataBean>(getActivity(),datas, R.layout.homecontent_listview_item){
-            @Override
-            public void display(ViewHolder holder, Goods.DataBean dataBean) {
-                holder.setText(R.id.contentTitle,dataBean.getGoods_name()).setImage(R.id.leftImg,"http://shop.yasite.net/ecshop/"+dataBean.getGoods_img());
-            }
-        };
+        adapter = new HomeContentAdapter(getActivity(),datas);
         mListView.setAdapter(adapter);
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        //填充数据
     }
 
     /**
@@ -68,6 +61,14 @@ public class HomeContentFragment extends BaseFragment {
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
 
+      if(isVisibleToUser) {
+          if(isFirstLoad){
+              isFirstLoad = false;
+          }
+          Log.d("BaseFragment", "setUserVisibleHint  可见的");
+      }else {
+          Log.d("BaseFragment", "setUserVisibleHint  不可见的");
+      }
     }
 
 
@@ -78,6 +79,7 @@ public class HomeContentFragment extends BaseFragment {
             @Override
             public void onSuccess(Goods goods) {
 
+                Log.i("BaseFragment","--onSuccess--");
                 datas.addAll(goods.getData());
 
                 adapter.notifyDataSetChanged();

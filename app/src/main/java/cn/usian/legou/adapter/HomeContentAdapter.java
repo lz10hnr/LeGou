@@ -21,6 +21,8 @@ public class HomeContentAdapter extends CommonAdapter<Goods.DataBean> {
 
     @Override
     public void display(ViewHolder holder, Goods.DataBean dataBean) {
-        holder.setImage(R.id.contentTitle,dataBean.getGoods_name());
+        holder.setImage(R.id.leftImg,dataBean.getGoods_img())
+                .setText(R.id.contentTitle,dataBean.getGoods_name())
+                .setText(R.id.desc,dataBean.getShop_price());
     }
 }

@@ -21,6 +21,9 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
     private ProgressDialog progressDialog;
 
     protected Map<String,String> params;
+
+    //fragment是否第一次加载
+    protected boolean isFirstLoad = true;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {

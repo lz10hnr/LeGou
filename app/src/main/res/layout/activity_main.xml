@@ -1,13 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".activity.MainActivity">
 
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_weight="1"
         android:id="@+id/contentGroup"></FrameLayout>
 
-</RelativeLayout>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:orientation="horizontal"
+            android:weightSum="4">
+
+            <RadioButton
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:drawableTop="@drawable/home_page"
+            android:button="@null"
+            android:gravity="center"
+            android:paddingTop="5dp"
+            android:id="@+id/homeBtn"
+            android:text="首页"/>
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/drive_car"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:id="@+id/foundBtn"
+                android:text="发现"/>
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/play_car"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:id="@+id/shoppingCarBtn"
+                android:text="购物车"/>
+            <RadioButton
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:drawableTop="@drawable/icar"
+                android:button="@null"
+                android:gravity="center"
+                android:paddingTop="5dp"
+                android:id="@+id/mineBtn"
+                android:text="我的"/>
+
+        </RadioGroup>
+
+
+
+</LinearLayout>

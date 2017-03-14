@@ -8,6 +8,8 @@ public class Urls {
 
     //服务器地址
     public static final String BASEURL = "http://shopapi.yasite.net/index.php/";
+    //图片地址前缀
+    public static final String BASEIMGURL = "http://shop.yasite.net/ecshop/";
 
     //获取首页的分类列表
     public static final String GETCATEGORY = BASEURL + "goodController/getCategory";

@@ -12,6 +12,8 @@ import com.bumptech.glide.Glide;
 import java.util.HashMap;
 import java.util.Map;
 
+import cn.usian.legou.common.Urls;
+
 /**
  * Created by TuLing on 2017/3/14.
  */
@@ -30,10 +32,17 @@ public class ViewHolder {
     private ViewHolder(Context context,View convertView, int layoutId){
         this.views = new HashMap<>();
         this.context = context;
-        convertView = LayoutInflater.from(context).inflate(layoutId,null);
-        convertView.setTag(this);
+        this.convertView = LayoutInflater.from(context).inflate(layoutId,null);
+        this.convertView.setTag(this);
     }
-    //第二步 提供一个静态的公共的方法 该方法的返回值就是ViewHolder对象
+
+    /**
+     * 第二步 提供一个静态的公共的方法 该方法的返回值就是ViewHolder对象
+     * @param context 实例化LayoutInflater所需要的参数
+     * @param convertView viewHolder的优化所必须的
+     * @param layoutId 加载的布局的d
+     * @return
+     */
     public static ViewHolder getInstance(Context context,View convertView, int layoutId){
         if(convertView == null)
             return new ViewHolder(context,convertView,layoutId);
@@ -73,7 +82,6 @@ public class ViewHolder {
         TextView tv = findViewById(viewId);
         if (tv != null)
             tv.setText(text);
-
         return  this;
     }
 
@@ -86,8 +94,7 @@ public class ViewHolder {
 
         ImageView img = findViewById(viewId);
         if(img != null)
-            Glide.with(context).load(imgUrl).into(img);
-
+            Glide.with(context).load(Urls.BASEIMGURL+imgUrl).into(img);
         return this;
     }
 
