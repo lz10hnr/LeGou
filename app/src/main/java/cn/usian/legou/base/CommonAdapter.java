@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * Created by TuLing on 2017/3/14.
  */
-public abstract   class CommonAdapter<T> extends BaseAdapter {
+public abstract  class CommonAdapter<T> extends BaseAdapter {
     private List<T> datas;
     private Context context;
     private int layoutId;
@@ -40,11 +40,14 @@ public abstract   class CommonAdapter<T> extends BaseAdapter {
     @Override
     public View getView(int i, View view, ViewGroup viewGroup) {
         ViewHolder holder = ViewHolder.getInstance(context, view, layoutId);
-        //填充数据
-//        holder.setText(R.id.contentTitle,"2333").setImage().setText();
         display(holder,datas.get(i));
         return holder.getConvertView();
     }
 
+    /**
+     * 填充数据的抽象方法
+     * @param holder
+     * @param t
+     */
     public abstract void display(ViewHolder holder,T t);
 }

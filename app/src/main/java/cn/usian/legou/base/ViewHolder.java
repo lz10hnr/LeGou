@@ -53,7 +53,7 @@ public class ViewHolder {
      * @param <T>
      * @return
      */
-    private <T extends View> T get(int viewId){
+    private <T extends View> T findViewById(int viewId){
 
         //先从内存（Map集合）中查找view是否已经存在 没有的话就findviewByid加载 并存储到集合中 否则直接从集合中取出 return 返回
 
@@ -72,7 +72,7 @@ public class ViewHolder {
      */
     public ViewHolder setText(int viewId,String text){
 
-        TextView tv = get(viewId);
+        TextView tv = findViewById(viewId);
         if (tv != null)
             tv.setText(text);
 
@@ -86,7 +86,7 @@ public class ViewHolder {
      */
     public ViewHolder setImage(int viewId,String imgUrl){
 
-        ImageView img = get(viewId);
+        ImageView img = findViewById(viewId);
         if(img != null)
             Glide.with(context).load(imgUrl).into(img);
 
