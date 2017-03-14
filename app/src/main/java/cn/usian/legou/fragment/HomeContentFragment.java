@@ -60,7 +60,7 @@ public class HomeContentFragment extends BaseFragment {
   @Override
     public void setUserVisibleHint(boolean isVisibleToUser) {
         super.setUserVisibleHint(isVisibleToUser);
-
+/*
       if(isVisibleToUser) {
           if(isFirstLoad){
               isFirstLoad = false;
@@ -68,7 +68,7 @@ public class HomeContentFragment extends BaseFragment {
           Log.d("BaseFragment", "setUserVisibleHint  可见的");
       }else {
           Log.d("BaseFragment", "setUserVisibleHint  不可见的");
-      }
+      }*/
     }
 
 
