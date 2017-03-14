@@ -11,6 +11,9 @@ public class Urls {
 
     //获取首页的分类列表
     public static final String GETCATEGORY = BASEURL + "goodController/getCategory";
+    //获取首页的商品列表
+    public static final String GOODS = BASEURL + "goodController/getGoodList";
+
 
 
 }

@@ -9,5 +9,6 @@ public class Keys {
 
     public static String ID = "id";
     public static String TITLE = "title";
+    public static String PAGE = "page";
 
 }
