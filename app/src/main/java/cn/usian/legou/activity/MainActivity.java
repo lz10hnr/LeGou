@@ -3,34 +3,29 @@ package cn.usian.legou.activity;
 import android.os.Bundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.RadioButton;
 
 import cn.usian.legou.R;
+import cn.usian.legou.base.BaseActivity;
 import cn.usian.legou.base.BaseFragment;
 import cn.usian.legou.common.Keys;
 import cn.usian.legou.fragment.EmptyFragment;
 import cn.usian.legou.fragment.HomeFragment;
 
-public class MainActivity extends AppCompatActivity implements RadioButton.OnClickListener {
+public class MainActivity extends BaseActivity implements RadioButton.OnClickListener {
 
-    RadioButton homeBtn;
-    RadioButton foundBtn;
-    RadioButton shoppingCarBtn;
-    RadioButton mineButtoon;
+    private RadioButton homeBtn;
+    private RadioButton foundBtn;
+    private RadioButton shoppingCarBtn;
+    private RadioButton mineButtoon;
     private BaseFragment homeFragment;
     private BaseFragment foundFragment;
     private BaseFragment shoppingFragment;
     private BaseFragment mineFragment;
     private FragmentManager fragmentManager;
     private BaseFragment currentFragment;
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-        init();
-    }
+
 
     /**
      * 页面切换的方法
@@ -42,7 +37,8 @@ public class MainActivity extends AppCompatActivity implements RadioButton.OnCli
         fragmentManager = getSupportFragmentManager();
         FragmentTransaction transaction = fragmentManager.beginTransaction();
 
-        fragment.setParams(bundle);
+        if(bundle != null)
+            fragment.setParams(bundle);
 
         transaction.hide(currentFragment);
 
@@ -51,28 +47,47 @@ public class MainActivity extends AppCompatActivity implements RadioButton.OnCli
             transaction.add(R.id.contentGroup, fragment);
         }
         transaction.show(fragment);
-
         transaction.commit();
-
         currentFragment=fragment;
     }
 
-    private void init(){
-        homeFragment = new HomeFragment();
-        foundFragment =new EmptyFragment();
-       shoppingFragment =new EmptyFragment();
-        mineFragment =new EmptyFragment();
+    @Override
+    protected int layoutId() {
+        return R.layout.activity_main;
+    }
+
+    @Override
+    protected void initView() {
         homeBtn=(RadioButton)findViewById(R.id.homeBtn);
         foundBtn= (RadioButton) findViewById(R.id.foundBtn);
         shoppingCarBtn=(RadioButton)findViewById(R.id.shoppingCarBtn);
         mineButtoon=(RadioButton)findViewById(R.id.mineBtn);
+    }
+
+    @Override
+    protected void initData() {
+
+        homeFragment = new HomeFragment();
+        foundFragment =new EmptyFragment();
+        shoppingFragment =new EmptyFragment();
+        mineFragment =new EmptyFragment();
+        currentFragment=homeFragment;
+        changeContentView(homeFragment,null,false);
+    }
+
+    @Override
+    protected void initListener() {
         homeBtn.setOnClickListener(this);
         foundBtn.setOnClickListener(this);
         shoppingCarBtn.setOnClickListener(this);
         mineButtoon.setOnClickListener(this);
-        currentFragment=homeFragment;
-        changeContentView(homeFragment,null,false);
     }
+
+    @Override
+    protected void loadData() {
+
+    }
+
 
     @Override
     public void onClick(View view) {

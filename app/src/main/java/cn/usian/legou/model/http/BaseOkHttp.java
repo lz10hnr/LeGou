@@ -1,8 +1,8 @@
 package cn.usian.legou.model.http;
 
-import android.os.Handler;
-import android.os.Message;
+import android.widget.ImageView;
 
+import com.bumptech.glide.Glide;
 import com.google.gson.Gson;
 
 import java.io.IOException;
@@ -11,6 +11,7 @@ import java.lang.reflect.Type;
 import java.util.Map;
 import java.util.Set;
 
+import cn.usian.legou.base.App;
 import cn.usian.legou.model.http.callback.ResultCallBack;
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -32,8 +33,6 @@ public class BaseOkHttp<T> {
     //请求失败的状态码
     private static final int ERRORCODE = 100;
 
-
-    private  ResultCallBack callBack;
     /**
      * 抽取单例的OKHttpClient对象
      * 第一步 构造函数私有化
@@ -64,7 +63,7 @@ public class BaseOkHttp<T> {
      * @param params 参数列表
      * @param callBack 请求的回调
      */
-    public void get(String url, Map<String,String> params, final ResultCallBack<String> callBack){
+    public void get(String url, Map<String,String> params, final ResultCallBack<T> callBack){
         if(params != null && params.size() > 0) {
             StringBuffer sb = new StringBuffer(url);
             sb.append("?");
@@ -80,13 +79,27 @@ public class BaseOkHttp<T> {
         Request request = new Request.Builder().url(url).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                callBack.onError(e.getMessage().toString(),"404");
+            public void onFailure(Call call, final IOException e) {
+                App.context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.onError(e.getMessage().toString(), "100");
+                    }
+                });
             }
 
             @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                callBack.onSuccess(response.body().string());
+            public void onResponse(Call call, final Response response) throws IOException {
+
+                String result = response.body().string();
+                final T t = getGeneric(result, callBack);
+                App.context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.onSuccess(t);
+                    }
+                });
+
             }
         });
 
@@ -99,7 +112,6 @@ public class BaseOkHttp<T> {
      * @param callBack 回调
      */
     public void post(String url, Map<String,String> params, final ResultCallBack<T> callBack){
-        this.callBack = callBack;
         FormBody.Builder builder = null;
         if(params != null && params.size() > 0) {
             builder = new FormBody.Builder();
@@ -115,11 +127,14 @@ public class BaseOkHttp<T> {
         Request request = new Request.Builder().url(url).post(builder.build()).build();
         okHttpClient.newCall(request).enqueue(new Callback() {
             @Override
-            public void onFailure(Call call, IOException e) {
-                Message msg = new Message();
-                msg.obj = e.getMessage().toString();
-                msg.what = ERRORCODE;
-                handler.sendMessage(msg);
+            public void onFailure(Call call, final IOException e) {
+
+                App.context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.onError(e.getMessage().toString(), "100");
+                    }
+                });
 
             }
 
@@ -127,35 +142,35 @@ public class BaseOkHttp<T> {
             public void onResponse(Call call, Response response) throws IOException {
                 String result = response.body().string();
 
-                Message msg = new Message();
-                msg.obj = result;
-                msg.what = SUCCESSCODE;
-                handler.sendMessage(msg);
+                final T t = getGeneric(result, callBack);
+                App.context.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        callBack.onSuccess(t);
+                    }
+                });
+
             }
         });
 
     }
 
-    Handler handler = new Handler(){
-        @Override
-        public void handleMessage(Message msg) {
-            String result = (String) msg.obj;
-            switch (msg.what){
+    /**
+     * 使用Glide加载网络图片
+     * @param imageView
+     * @param imgUrl
+     */
+    public void loadImage(ImageView imageView,String imgUrl){
+        Glide.with(App.context).load(imgUrl).into(imageView);
+    }
 
-                case SUCCESSCODE:
-                    Gson gson = new Gson();
-                    //通过反射获取泛型的实例
-                    Type[] types = callBack.getClass().getGenericInterfaces();
-                    Type[] actualTypeArguments = ((ParameterizedType) types[0]).getActualTypeArguments();
-                    T t = gson.fromJson(result,actualTypeArguments[0]);
-                    callBack.onSuccess(t);
-                    break;
-                case ERRORCODE:
-                    callBack.onError(result,"100");
-                    break;
-            }
-
-        }
-    };
+    private T getGeneric(String jsonData,ResultCallBack<T> callBack){
+        Gson gson = new Gson();
+        //通过反射获取泛型的实例
+        Type[] types = callBack.getClass().getGenericInterfaces();
+        Type[] actualTypeArguments = ((ParameterizedType) types[0]).getActualTypeArguments();
+        T t = gson.fromJson(jsonData,actualTypeArguments[0]);
+        return t;
+    }
 
 }

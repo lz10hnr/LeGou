@@ -15,6 +15,8 @@ public class Urls {
     public static final String GETCATEGORY = BASEURL + "goodController/getCategory";
     //获取首页的商品列表
     public static final String GOODS = BASEURL + "goodController/getGoodList";
+    //获取首页轮播图
+    public static final String HOMEBANNER = "http://www.ipanda.com/kehuduan/PAGE14501749764071042/index.json";
 
 
 

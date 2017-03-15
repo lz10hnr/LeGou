@@ -29,7 +29,7 @@ public class ViewHolder {
     private Context context;
 
     //第一步 构造函数私有化
-    private ViewHolder(Context context,View convertView, int layoutId){
+    private ViewHolder(Context context, int layoutId){
         this.views = new HashMap<>();
         this.context = context;
         this.convertView = LayoutInflater.from(context).inflate(layoutId,null);
@@ -45,7 +45,7 @@ public class ViewHolder {
      */
     public static ViewHolder getInstance(Context context,View convertView, int layoutId){
         if(convertView == null)
-            return new ViewHolder(context,convertView,layoutId);
+            return new ViewHolder(context,layoutId);
         return (ViewHolder) convertView.getTag();
     }
 

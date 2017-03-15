@@ -3,13 +3,26 @@ package cn.usian.legou.base;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
-import cn.usian.legou.R;
-
-public class BaseActivity extends AppCompatActivity {
+public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_base);
+        setContentView(layoutId());
+        App.context = this;
+        initView();
+        initData();
+        initListener();
+        loadData();
     }
+
+    protected abstract int layoutId();
+
+    protected abstract void initView();
+
+    protected abstract void initData();
+
+    protected abstract void initListener();
+
+    protected abstract void loadData();
 }

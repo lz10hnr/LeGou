@@ -1,5 +1,7 @@
 package cn.usian.legou.model.http;
 
+import android.widget.ImageView;
+
 import java.util.Map;
 
 import cn.usian.legou.model.http.callback.ResultCallBack;
@@ -18,5 +20,10 @@ public class MineModelImpl implements IMineModel {
     public void register(String url, Map params, ResultCallBack callBack) {
 
         baseOkHttp.post(url,params,callBack);
+    }
+
+    @Override
+    public void loadImageByUrl(ImageView imageView, String imgUrl) {
+
     }
 }

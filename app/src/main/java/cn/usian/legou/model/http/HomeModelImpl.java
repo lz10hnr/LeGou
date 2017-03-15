@@ -1,5 +1,7 @@
 package cn.usian.legou.model.http;
 
+import android.widget.ImageView;
+
 import java.util.Map;
 
 import cn.usian.legou.model.http.callback.ResultCallBack;
@@ -18,5 +20,15 @@ public class HomeModelImpl implements IHomeModel {
     public void getGoods(String url, Map params, ResultCallBack callBack) {
 
         baseOkHttp.post(url,params,callBack);
+    }
+
+    @Override
+    public void getHomeBanner(String url, Map<String, String> params, ResultCallBack callBack) {
+        baseOkHttp.get(url,params,callBack);
+    }
+
+    @Override
+    public void loadImageByUrl(ImageView imageView, String imgUrl) {
+        baseOkHttp.loadImage(imageView,imgUrl);
     }
 }

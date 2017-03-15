@@ -3,6 +3,7 @@ package cn.usian.legou.fragment;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 
 import java.util.ArrayList;
@@ -44,7 +45,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-
         homeModel = new HomeModelImpl();
         fragments = new ArrayList<>();
         titleBeans = new ArrayList<>();
@@ -58,8 +58,6 @@ public class HomeFragment extends BaseFragment {
 
     @Override
     protected void loadData() {
-
-
         /**
          * ResultCallBack<你期望的服务器返回的类型>
          * 在onSuccess的回调参数就是你期望的类型
@@ -71,6 +69,7 @@ public class HomeFragment extends BaseFragment {
                 for (HomeCategory.DataBean bean : data.getData()){
                     titleLayout.addTab(titleLayout.newTab().setText(bean.getCat_name()));
                     HomeContentFragment homeContentFragment = new HomeContentFragment();
+                    Log.i("abc","-------"+homeContentFragment);
                     Bundle bundle = new Bundle();
                     bundle.putString(Keys.TITLE,bean.getCat_name());
                     homeContentFragment.setParams(bundle);
