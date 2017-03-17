@@ -1,10 +1,15 @@
 package cn.usian.legou.activity;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.view.View;
 import android.widget.RadioButton;
+import android.widget.Toast;
 
 import cn.usian.legou.R;
 import cn.usian.legou.base.BaseActivity;
@@ -12,6 +17,7 @@ import cn.usian.legou.base.BaseFragment;
 import cn.usian.legou.common.Keys;
 import cn.usian.legou.fragment.EmptyFragment;
 import cn.usian.legou.fragment.HomeFragment;
+import cn.usian.legou.fragment.MineFragment;
 
 public class MainActivity extends BaseActivity implements RadioButton.OnClickListener {
 
@@ -25,6 +31,7 @@ public class MainActivity extends BaseActivity implements RadioButton.OnClickLis
     private BaseFragment mineFragment;
     private FragmentManager fragmentManager;
     private BaseFragment currentFragment;
+    private final static int PERMISSIONCODE = 100;
 
 
     /**
@@ -70,7 +77,7 @@ public class MainActivity extends BaseActivity implements RadioButton.OnClickLis
         homeFragment = new HomeFragment();
         foundFragment =new EmptyFragment();
         shoppingFragment =new EmptyFragment();
-        mineFragment =new EmptyFragment();
+        mineFragment =new MineFragment();
         currentFragment=homeFragment;
         changeContentView(homeFragment,null,false);
     }
@@ -81,6 +88,29 @@ public class MainActivity extends BaseActivity implements RadioButton.OnClickLis
         foundBtn.setOnClickListener(this);
         shoppingCarBtn.setOnClickListener(this);
         mineButtoon.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkPermission();
+    }
+
+    private void checkPermission(){
+        if(checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED){
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE},PERMISSIONCODE);
+        }
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        if(requestCode == PERMISSIONCODE){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED)
+                Toast.makeText(this,"授权成功",Toast.LENGTH_LONG).show();
+            else
+                Toast.makeText(this,"拒绝授权",Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

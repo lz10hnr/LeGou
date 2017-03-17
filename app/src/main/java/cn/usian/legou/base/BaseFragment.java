@@ -36,6 +36,14 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         initView(view);
         initData();
         loadData();
+
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (isFirstLoad)
+            isFirstLoad = false;
     }
 
     /**

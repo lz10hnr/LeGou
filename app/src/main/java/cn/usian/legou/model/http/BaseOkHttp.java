@@ -83,7 +83,8 @@ public class BaseOkHttp<T> {
                 App.context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        callBack.onError(e.getMessage().toString(), "100");
+                        if (e != null && e.getMessage() != null)
+                            callBack.onError(e.getMessage().toString(), "100");
                     }
                 });
             }
@@ -132,7 +133,8 @@ public class BaseOkHttp<T> {
                 App.context.runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        callBack.onError(e.getMessage().toString(), "100");
+                        if (e != null && e.getMessage() != null)
+                            callBack.onError(e.getMessage().toString(), "100");
                     }
                 });
 

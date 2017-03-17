@@ -1,9 +1,14 @@
 package cn.usian.legou.fragment;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -41,6 +46,8 @@ public class HomeContentFragment extends BaseFragment {
     private final static int STARTPOSITION = 10000;
     //自动滑动的标识
     private final static int AUTOSCROLL = 100;
+    //自动滑动暂停
+    private final static int SCROLLPAUSE = 101;
     //自动滑动的延时时间
     private final static int DELAYEDTIME = 3000;
     //轮播图的当前位置
@@ -49,6 +56,21 @@ public class HomeContentFragment extends BaseFragment {
     @Override
     protected int getLayoutId() {
         return R.layout.home_content_fragment;
+    }
+
+    @Nullable
+    @Override
+    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        Log.i("abc","onCreateView == "+this);
+        return super.onCreateView(inflater, container, savedInstanceState);
+    }
+
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        handler.sendEmptyMessage(SCROLLPAUSE);
+        Log.i("abc","onPause == "+this+"，handler");
     }
 
     @Override
@@ -134,6 +156,8 @@ public class HomeContentFragment extends BaseFragment {
                     currentPosistion = currentPosistion+1;
                     bannerViewPager.setCurrentItem(currentPosistion);
                     sendEmptyMessageDelayed(AUTOSCROLL,DELAYEDTIME);
+                    break;
+                case SCROLLPAUSE:
                     break;
             }
 
