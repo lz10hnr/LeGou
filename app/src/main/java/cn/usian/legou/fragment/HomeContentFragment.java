@@ -43,8 +43,8 @@ public class HomeContentFragment extends BaseFragment {
     private HomeBannerAdapter bannerAdapter;
     private List<ImageView> bannerImgs;
     //viewpager默认的起始位置
-    private final static int STARTPOSITION = 10000;
     //自动滑动的标识
+    private final static int STARTPOSITION = 10000;
     private final static int AUTOSCROLL = 100;
     //自动滑动暂停
     private final static int SCROLLPAUSE = 101;
@@ -52,6 +52,8 @@ public class HomeContentFragment extends BaseFragment {
     private final static int DELAYEDTIME = 3000;
     //轮播图的当前位置
     private int currentPosistion = STARTPOSITION;
+
+    private View viewPagerLayout;
 
     @Override
     protected int getLayoutId() {
@@ -75,8 +77,9 @@ public class HomeContentFragment extends BaseFragment {
 
     @Override
     protected void initView(View view) {
+        viewPagerLayout = LayoutInflater.from(getActivity()).inflate(R.layout.home_listview_header,null);
         mListView = (ListView) view.findViewById(R.id.contentListView);
-        bannerViewPager = (ViewPager) view.findViewById(R.id.bannerViewPager);
+        bannerViewPager = (ViewPager) viewPagerLayout.findViewById(R.id.bannerViewPager);
         bannerViewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
@@ -86,6 +89,7 @@ public class HomeContentFragment extends BaseFragment {
             @Override
             public void onPageSelected(int position) {
 
+                //校正位置  （手动和自动）
                 currentPosistion = position;
             }
 
@@ -94,6 +98,7 @@ public class HomeContentFragment extends BaseFragment {
 
             }
         });
+        mListView.addHeaderView(viewPagerLayout);
     }
 
     @Override
@@ -147,6 +152,18 @@ public class HomeContentFragment extends BaseFragment {
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.i("abc","---------onResume-------");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.i("abc","---------onPause-------");
+    }
+
     Handler handler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
@@ -187,5 +204,10 @@ public class HomeContentFragment extends BaseFragment {
     @Override
     public void onClick(View view) {
 
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
     }
 }
