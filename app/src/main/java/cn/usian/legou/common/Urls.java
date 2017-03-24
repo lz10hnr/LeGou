@@ -18,6 +18,9 @@ public class Urls {
     //获取首页轮播图
     public static final String HOMEBANNER = "http://www.ipanda.com/kehuduan/PAGE14501749764071042/index.json";
 
+    //上传图片
+    public static final String UPLOADIMG = BASEURL + "userController/updateUserHeadImg";
+
 
 
 }

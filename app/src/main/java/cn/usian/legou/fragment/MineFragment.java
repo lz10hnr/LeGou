@@ -16,6 +16,10 @@ import java.io.InputStream;
 import cn.usian.legou.R;
 import cn.usian.legou.activity.UserInfoActivity;
 import cn.usian.legou.base.BaseFragment;
+import cn.usian.legou.common.Urls;
+import cn.usian.legou.model.http.HomeModelImpl;
+import cn.usian.legou.model.http.IHomeModel;
+import cn.usian.legou.model.http.callback.ResultCallBack;
 import cn.usian.legou.view.CircleImg;
 
 /**
@@ -26,6 +30,7 @@ public class MineFragment extends BaseFragment {
 
     private CircleImg headImg;
     private static final int OPENUSERINFOCODE = 200;
+    private IHomeModel homeModel;
 
     @Override
     protected int getLayoutId() {
@@ -42,6 +47,7 @@ public class MineFragment extends BaseFragment {
     @Override
     protected void initData() {
 
+        homeModel = new HomeModelImpl();
     }
 
     @Override
@@ -72,6 +78,19 @@ public class MineFragment extends BaseFragment {
 //                        FileInputStream inputStream = new FileInputStream(headPath);
 //                        Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
                         headImg.setBitmapByFile(headPath);
+                    params.put("fl",headPath);
+                    params.put("token","092710cea3604af7caae71fac7f4dc26");
+                    homeModel.uploadImg(Urls.UPLOADIMG, params, new ResultCallBack<Object>() {
+                        @Override
+                        public void onSuccess(Object data) {
+
+                        }
+
+                        @Override
+                        public void onError(String errorMsg, String errorCode) {
+
+                        }
+                    });
 
 //                    Bitmap bitmap = data.getParcelableExtra("data");
 

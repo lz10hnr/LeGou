@@ -31,6 +31,7 @@ public interface IHomeModel extends IModel{
      * @param callBack
      */
     void getHomeBanner(String url, Map<String,String> params, ResultCallBack callBack);
+    <T>void uploadImg(String url, Map<String,String> params, ResultCallBack<T> callBack);
 
 
 }

@@ -158,11 +158,6 @@ public class HomeContentFragment extends BaseFragment {
         Log.i("abc","---------onResume-------");
     }
 
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.i("abc","---------onPause-------");
-    }
 
     Handler handler = new Handler(){
         @Override

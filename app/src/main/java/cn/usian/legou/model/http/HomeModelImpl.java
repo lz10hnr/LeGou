@@ -28,6 +28,11 @@ public class HomeModelImpl implements IHomeModel {
     }
 
     @Override
+    public <T> void uploadImg(String url, Map<String, String> params, ResultCallBack<T> callBack) {
+        baseOkHttp.uploadImage(url,params,callBack);
+    }
+
+    @Override
     public void loadImageByUrl(ImageView imageView, String imgUrl) {
         baseOkHttp.loadImage(imageView,imgUrl);
     }

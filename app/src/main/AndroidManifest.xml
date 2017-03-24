@@ -3,8 +3,8 @@
     package="cn.usian.legou">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".base.App"
@@ -16,13 +16,17 @@
         <activity
             android:name=".activity.MainActivity"
             android:launchMode="singleTask">
+
+        </activity>
+        <activity android:name=".activity.UserInfoActivity" />
+        <activity android:name=".activity.SearchActivity">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.UserInfoActivity"></activity>
     </application>
 
 </manifest>
